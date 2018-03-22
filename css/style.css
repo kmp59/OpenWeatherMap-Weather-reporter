@@ -1,0 +1,35 @@
+.search-container{
+    float: right;
+    margin-top: 15px;
+    padding-right: 30px;
+}
+
+
+.search-container button{
+    padding: 4px;
+    padding-bottom: 6px;
+}
+
+.navbar{
+    background-color: #8d0904;
+}
+
+.navbar-inverse .navbar-text{
+    color: white;
+    font-family: 'Russo One', sans-serif;;
+}
+
+#B{
+    width: 40%;
+    background: #7292d0b3;
+    border-radius: 25px;
+    text-align: center;
+    font-family: fantasy
+    
+}
+
+
+h2{
+    font-family: 'Jockey One', sans-serif;
+    font-size: 35px;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title style="font-family: 'Russo One', sans-serif;"> WEATHER REPORT </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel = "stylesheet" href= "css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Jockey+One" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet"> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+            <script type = "text/javascript"> 
+        $(document).ready( function(){
+            
+            $("button").click(function(){
+                var zip = $("#zip").val();
+                if(zip != ''){
+                    $.ajax({
+                        type: 		"GET",
+                        url: 		"wcode.php",
+                        data: 		"zip="+zip,
+                        
+                        
+                        beforeSend: function(){ 
+                                       $("#B").html("waiting....");
+                                    },
+                        error: 		function(xhr, status, error) {
+                                        alert( "Error Mesaage:  \r\nNumeric code is: "  + xhr.status + " \r\nError is " + error); 	
+                                    },
+                        success: 	function(result){
+                                        r = JSON.parse(result);
+                                        var date = new Date(r.dt*1000);
+                                        var sunrise = new Date(r.sys.sunrise*1000);
+                                        var sunset = new Date(r.sys.sunset*1000);
+                                        res =  "<h2 style='padding: 5px;'>Current Weather for:" + r.name + ", " + r.sys.country + "</h2></>"+
+                                               "<h2 style='padding: 5px;'>City: "+ r.name+ "</h2>"+
+                                               "<h2 style='padding: 5px;'>Temperature: " + r.main.temp + "&deg;C</h2>"+
+                                               "<h2 style='padding: 5px;'>Main: " +r.weather[0].main + "</h2>"+
+                                               "<h2>Description: <img src='http://openweathermap.org/img/w/"+r.weather[0].icon+".png'>" + r.weather[0].description + "</h2>"+
+                                               " <h2 style='padding: 5px;'>Humidity: " + r.main.humidity + "%</h2>"+
+                                               "<h2 style='padding: 5px;'>Date & Time: " + date.toLocaleString() + "</h2>"+
+                                               "<h2 style='padding: 5px;'> Wind Speed: " + r.wind.speed + "m/s</h2>"+
+                                               "<h2 style='padding: 5px;'>Sunrise: " + sunrise.toLocaleString() + "</h2>"+
+                                               "<h2 style='padding: 5px;'>Sunset: " + sunset.toLocaleString() + "</h2>";
+                                        $("#B").html(res);
+                        }
+                    });
+                };
+            });
+        });
+                
+    </script>
+        
+    </head>
+	<body background = "weather.jpg">
+            <nav class="navbar sticky-top navbar-inverse bg-inverse">
+                <Span class = "form-inline">
+                    <h1 class = "navbar-text"> Weather Map</h1>   
+                        <div class = "search-container">
+                            <input id = "zip" class = "form-control mr-sm-2" type = "number" name = "zip" placeholder="Zipcode.." autocomplete="off" min="0" required>
+                            <button id = "btn" type = "Submit"><b>Submit</b></button>
+                        </div>
+                </Span>  
+            </nav>
+            <div id= "B"> 
+                
+            </div>
+            
+    </body>
+</html>
